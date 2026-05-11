@@ -16,6 +16,11 @@ dynamic = ["version"]
 license = "MIT OR Apache-2.0"
 license-files = ["LICENSE-APACHE", "LICENSE-MIT"]
 
+[project.urls]
+Repository = "https://github.com/astral-sh/juwunit"
+Documentation = "https://docs.astral.sh/juwunit"
+Releases = "https://github.com/astral-sh/juwunit/releases"
+
 [dependency-groups]
 dev = [
     "inline-snapshot>=0.32.7",
