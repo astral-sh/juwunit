@@ -4,13 +4,21 @@ build-backend = "maturin"
 
 [project]
 name = "juwunit"
+description = "Small JUnit XML serialization/deserialization for Python"
+authors = [{ name = "Astral Software Inc.", email = "hey@astral.sh" }]
 requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dynamic = ["version"]
+license = "MIT OR Apache-2.0"
+license-files = ["LICENSE-APACHE", "LICENSE-MIT"]
+
+[project.urls]
+Repository = "https://github.com/astral-sh/juwunit"
+Documentation = "https://docs.astral.sh/juwunit"
+Releases = "https://github.com/astral-sh/juwunit/releases"
 
 [dependency-groups]
 dev = [
@@ -23,6 +31,10 @@ dev = [
 [tool.maturin]
 python-source = "."
 module-name = "juwunit._juwunit"
+include = [
+    { path = "LICENSE-APACHE", format = "sdist" },
+    { path = "LICENSE-MIT", format = "sdist" },
+]
 
 [tool.inline-snapshot]
 format-command = "ruff format --stdin-filename {filename}"
