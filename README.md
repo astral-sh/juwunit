@@ -8,6 +8,12 @@ It's a small Python layer on top of the excellent [quick-junit].
 
 ## Usage
 
+Install it:
+
+```console
+uv add juwunit
+```
+
 Loading a report:
 
 ```python
