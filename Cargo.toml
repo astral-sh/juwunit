@@ -1,0 +1,13 @@
+[package]
+name = "juwunit"
+version = "0.1.0"
+edition = "2024"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "_juwunit"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = "0.28.2"
+quick-junit = "0.6.0"

@@ -1,0 +1,31 @@
+[build-system]
+requires = ["maturin>=1.13,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "juwunit"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+]
+dynamic = ["version"]
+
+[dependency-groups]
+dev = [
+    "inline-snapshot>=0.32.7",
+    "maturin>=1.13,<2.0",
+    "pytest>=8.0",
+    "ty>=0.0.35",
+]
+
+[tool.maturin]
+python-source = "."
+module-name = "juwunit._juwunit"
+
+[tool.inline-snapshot]
+format-command = "ruff format --stdin-filename {filename}"
+
+[tool.ty.analysis]
+allowed-unresolved-imports = ["juwunit._juwunit"]
