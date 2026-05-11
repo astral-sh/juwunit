@@ -32,6 +32,10 @@ dev = [
 [tool.maturin]
 python-source = "."
 module-name = "juwunit._juwunit"
+include = [
+    { path = "LICENSE-APACHE", format = "sdist" },
+    { path = "LICENSE-MIT", format = "sdist" },
+]
 
 [tool.inline-snapshot]
 format-command = "ruff format --stdin-filename {filename}"
