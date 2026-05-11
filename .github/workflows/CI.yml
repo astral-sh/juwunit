@@ -76,9 +76,6 @@ jobs:
           - runner: windows-latest
             target: x86_64-pc-windows-msvc
             python_arch: x64
-          - runner: windows-latest
-            target: i686-pc-windows-msvc
-            python_arch: x86
           - runner: windows-11-arm
             target: aarch64-pc-windows-msvc
             python_arch: arm64
