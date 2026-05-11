@@ -9,5 +9,5 @@ name = "_juwunit"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = { version = "0.28.2", features = ["abi3-py310"] }
+pyo3 = { version = "0.28.2", features = ["abi3-py310", "generate-import-lib"] }
 quick-junit = "0.6.0"
