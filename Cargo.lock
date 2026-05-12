@@ -111,7 +111,7 @@ dependencies = [
 
 [[package]]
 name = "juwunit"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "pyo3",
  "quick-junit",
