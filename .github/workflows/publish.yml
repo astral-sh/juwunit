@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       dry_run:
-        description: Validate the CI artifact handoff without publishing.
+        description: Perform a dry run
         required: true
         default: true
         type: boolean
@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 jobs:
-  ci:
+  CI:
     uses: ./.github/workflows/CI.yml
     with:
       release_build: true
@@ -29,14 +29,15 @@ jobs:
     if: ${{ startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch' }}
     needs: ci
     permissions:
-      # Use to sign the release artifacts
-      id-token: write
-      # Used to upload release artifacts
-      contents: write
-      # Used to generate artifact attestation
-      attestations: write
+      id-token: write # Used for Trusted Publishing + to sign the release artifacts
+      contents: write # Used to upload release artifacts
+      attestations: write # Used to generate artifact attestation
+    environment:
+      name: pypi
     steps:
       - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          pattern: wheels-*
       - name: Verify downloaded artifacts
         run: |
           artifacts="$(find . -path './wheels-*/*' -type f | sort)"
@@ -61,5 +62,4 @@ jobs:
       - name: Publish to PyPI
         if: ${{ startsWith(github.ref, 'refs/tags/') && (github.event_name != 'workflow_dispatch' || !inputs.dry_run) }}
         run: uv publish 'wheels-*/*'
-        env:
-          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+
