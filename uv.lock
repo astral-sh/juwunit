@@ -69,6 +69,7 @@ wheels = [
 
 [[package]]
 name = "juwunit"
+version = "0.1.1"
 source = { editable = "." }
 
 [package.dev-dependencies]
