@@ -65,3 +65,11 @@ cargo test
 # python side
 uv run --dev pytest
 ```
+
+Linting/formatting/typechecking:
+
+```shell
+uv run --dev ruff format
+uv run --dev ruff check --fix
+uv run --dev ty check
+```

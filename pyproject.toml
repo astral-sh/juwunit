@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "juwunit"
-version = "0.1.1"
+version = "0.1.2"
 readme = "README.md"
 description = "Small JUnit XML serialization/deserialization for Python"
 authors = [{ name = "Astral Software Inc.", email = "hey@astral.sh" }]
@@ -26,6 +26,7 @@ dev = [
     "inline-snapshot>=0.32.7",
     "maturin>=1.13,<2.0",
     "pytest>=8.0",
+    "ruff>=0.15.12",
     "ty>=0.0.35",
 ]
 
@@ -42,3 +43,7 @@ format-command = "ruff format --stdin-filename {filename}"
 
 [tool.ty.analysis]
 allowed-unresolved-imports = ["juwunit._juwunit"]
+
+[tool.uv.exclude-newer-package]
+ty = false   # our own package: astral-sh/ty
+ruff = false # our own package: astral-sh/ruff

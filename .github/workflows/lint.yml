@@ -27,3 +27,5 @@ jobs:
         run: |
           uv run --dev pytest
           uv run --dev ty check
+          uv run --dev ruff check
+          uv run --dev ruff format --check
