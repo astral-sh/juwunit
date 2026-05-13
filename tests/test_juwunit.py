@@ -158,7 +158,8 @@ def test_full_feature_roundtrip() -> None:
         "passing": {
             "extra": parsed_passing.extra,
             "properties": [
-                (property.name, property.value) for property in parsed_passing.properties
+                (property.name, property.value)
+                for property in parsed_passing.properties
             ],
             "status_type": type(passing_status).__name__,
             "flaky_stack_trace": passing_status.flaky_runs[0].stack_trace,
