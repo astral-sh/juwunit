@@ -5,9 +5,8 @@ from io import BytesIO, StringIO
 from pathlib import Path
 from uuid import UUID
 
-from inline_snapshot import snapshot
-
 import pytest
+from inline_snapshot import snapshot
 
 import juwunit
 
@@ -266,7 +265,7 @@ def test_bad_xml_raises_custom_error() -> None:
 
 def test_rejects_naive_datetime_and_negative_timedelta() -> None:
     with pytest.raises(ValueError, match="timezone-aware"):
-        juwunit.Report("run", timestamp=datetime(2026, 5, 8))
+        juwunit.Report("run", timestamp=datetime(2026, 5, 8))  # noqa: DTZ001 (intentional for testing)
 
     with pytest.raises(ValueError, match="negative timedelta"):
         juwunit.Report("run", time=timedelta(seconds=-1))

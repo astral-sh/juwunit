@@ -43,6 +43,9 @@ format-command = "ruff format --stdin-filename {filename}"
 [tool.ty.analysis]
 allowed-unresolved-imports = ["juwunit._juwunit"]
 
+[tool.uv]
+exclude-newer = "P7D"
+
 [tool.uv.exclude-newer-package]
 ty = false   # our own package: astral-sh/ty
 ruff = false # our own package: astral-sh/ruff
