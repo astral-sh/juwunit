@@ -27,10 +27,9 @@ def test_basic_serialization_and_counts() -> None:
 
     assert report.to_xml() == snapshot("""\
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="run" tests="4" failures="1" errors="1">
-    <testsuite name="suite" tests="4" disabled="1" errors="1" failures="1">
-        <testcase name="passes">
-        </testcase>
+<testsuites name="run" tests="4" skipped="1" failures="1" errors="1">
+    <testsuite name="suite" tests="4" skipped="1" errors="1" failures="1">
+        <testcase name="passes"/>
         <testcase name="fails">
             <failure message="boom"/>
         </testcase>
@@ -116,8 +115,8 @@ def test_full_feature_roundtrip() -> None:
 
     assert parsed.to_xml() == snapshot("""\
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="run" tests="2" failures="1" errors="0" uuid="bfdac0d9-1740-4af6-bfac-126438be6a1f" timestamp="2026-05-08T20:53:15.186+00:00" time="2.000">
-    <testsuite name="suite" tests="2" disabled="0" errors="0" failures="1" timestamp="2026-05-08T20:53:15.186+00:00" time="1.000" hostname="ci">
+<testsuites name="run" tests="2" skipped="0" failures="1" errors="0" uuid="bfdac0d9-1740-4af6-bfac-126438be6a1f" timestamp="2026-05-08T20:53:15.186+00:00" time="2.000">
+    <testsuite name="suite" tests="2" skipped="0" errors="0" failures="1" timestamp="2026-05-08T20:53:15.186+00:00" time="1.000" hostname="ci">
         <properties>
             <property name="env" value="test"/>
         </properties>
@@ -240,7 +239,7 @@ def test_xml_sanitization() -> None:
         {
             "name": "name",
             "system_out": "okred",
-            "xml": '<?xml version="1.0" encoding="UTF-8"?>\n<testsuites name="run" tests="1" failures="0" errors="0">\n    <testsuite name="suite" tests="1" disabled="0" errors="0" failures="0">\n        <testcase name="name">\n            <system-out>okred</system-out>\n        </testcase>\n    </testsuite>\n</testsuites>\n',
+            "xml": '<?xml version="1.0" encoding="UTF-8"?>\n<testsuites name="run" tests="1" skipped="0" failures="0" errors="0">\n    <testsuite name="suite" tests="1" skipped="0" errors="0" failures="0">\n        <testcase name="name">\n            <system-out>okred</system-out>\n        </testcase>\n    </testsuite>\n</testsuites>\n',
         }
     )
 
