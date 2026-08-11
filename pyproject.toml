@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "juwunit"
-version = "0.1.3"
+version = "0.1.4"
 readme = "README.md"
 description = "Small JUnit XML serialization/deserialization for Python"
 authors = [{ name = "Astral Software Inc.", email = "hey@astral.sh" }]
