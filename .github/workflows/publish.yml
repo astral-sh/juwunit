@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   CI:
-    uses: ./.github/workflows/CI.yml
+    uses: $/.github/workflows/CI.yml
     with:
       release_build: true
     permissions:
