@@ -161,7 +161,7 @@ class TestSuite:
     def add_properties(self, properties: Sequence[Property]) -> None: ...
 
 class Report:
-    name: str
+    name: str | None
     uuid: UUID | None
     timestamp: datetime | None
     time: timedelta | None
@@ -171,7 +171,7 @@ class Report:
     test_suites: Sequence[TestSuite]
     def __init__(
         self,
-        name: str,
+        name: str | None,
         *,
         uuid: UUID | None = ...,
         timestamp: datetime | None = ...,

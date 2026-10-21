@@ -1,7 +1,7 @@
 use crate::errors::{DeserializationError, SerializationError};
 use crate::suite::{PyTestSuite, suite_counts};
 use crate::utils::{
-    extract_xml, normalize_timestamp, normalize_uuid, report_with_timestamp, sanitize_xml_text,
+    extract_xml, normalize_timestamp, normalize_uuid, report_with_timestamp, sanitize_optional,
     timestamp_to_python, uuid_to_python,
 };
 use pyo3::exceptions::PyValueError;
@@ -12,7 +12,7 @@ use std::time::Duration;
 
 #[pyclass(module = "juwunit._juwunit", name = "Report")]
 pub struct PyReport {
-    pub(crate) name: String,
+    pub(crate) name: Option<String>,
     pub(crate) uuid: Option<String>,
     pub(crate) timestamp: Option<String>,
     pub(crate) time: Option<Duration>,
@@ -25,13 +25,13 @@ impl PyReport {
     #[pyo3(signature = (name, *, uuid = None, timestamp = None, time = None))]
     fn new(
         py: Python<'_>,
-        name: String,
+        name: Option<String>,
         uuid: Option<&Bound<'_, PyAny>>,
         timestamp: Option<&Bound<'_, PyAny>>,
         time: Option<Duration>,
     ) -> PyResult<Self> {
         Ok(Self {
-            name: sanitize_xml_text(name),
+            name: sanitize_optional(name),
             uuid: normalize_uuid(py, uuid)?,
             timestamp: normalize_timestamp(py, timestamp)?,
             time,
@@ -73,13 +73,13 @@ impl PyReport {
     }
 
     #[getter]
-    fn name(&self) -> &str {
-        &self.name
+    fn name(&self) -> Option<&str> {
+        self.name.as_deref()
     }
 
     #[setter]
-    fn set_name(&mut self, value: String) {
-        self.name = sanitize_xml_text(value);
+    fn set_name(&mut self, value: Option<String>) {
+        self.name = sanitize_optional(value);
     }
 
     #[getter]
@@ -162,7 +162,10 @@ impl PyReport {
 
 impl PyReport {
     fn to_quick(&self, py: Python<'_>) -> PyResult<QuickReport> {
-        let mut report = QuickReport::new(self.name.clone());
+        let mut report = match &self.name {
+            Some(name) => QuickReport::new(name.clone()),
+            None => QuickReport::unnamed(),
+        };
         if let Some(uuid) = &self.uuid {
             let uuid = uuid
                 .parse::<ReportUuid>()
@@ -186,7 +189,7 @@ impl PyReport {
             .map(|suite| Py::new(py, PyTestSuite::from_quick(py, suite)?))
             .collect::<PyResult<Vec<_>>>()?;
         Ok(Self {
-            name: report.name.into_string(),
+            name: report.name.map(|name| name.into_string()),
             uuid: report.uuid.map(|uuid| uuid.to_string()),
             timestamp: report
                 .timestamp
