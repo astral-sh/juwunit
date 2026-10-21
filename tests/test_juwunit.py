@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, timezone
 from io import BytesIO, StringIO
 from pathlib import Path
 from uuid import UUID
+from xml.etree import ElementTree
 
 import pytest
 from inline_snapshot import snapshot
@@ -190,6 +191,26 @@ def test_full_feature_roundtrip() -> None:
             },
         }
     )
+
+
+@pytest.mark.parametrize(
+    ("name_attribute", "name"),
+    [("", None), (' name=""', ""), (' name="run"', "run")],
+)
+def test_report_name_roundtrip(name_attribute: str, name: str | None) -> None:
+    xml = f'<testsuites{name_attribute} tests="0" failures="0" errors="0"/>'
+    report = juwunit.Report.from_xml(xml)
+
+    assert report.name == name
+    assert ElementTree.fromstring(report.to_xml()).get("name") == name
+    assert juwunit.Report.from_xml(report.to_xml()).name == name
+
+    created = juwunit.Report(name)
+    assert created.name == name
+    assert ElementTree.fromstring(created.to_xml()).get("name") == name
+    created.name = None
+    assert created.name is None
+    assert ElementTree.fromstring(created.to_xml()).get("name") is None
 
 
 def test_deserialization_uses_derived_counts() -> None:
